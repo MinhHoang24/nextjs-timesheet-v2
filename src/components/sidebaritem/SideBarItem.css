@@ -1,0 +1,36 @@
+.sidebar-item {
+    width: 100%;
+    background: #fdfdfd;
+    padding: 5px 13px;
+    overflow-x: auto;
+}
+
+.sidebar-link {
+    color: #747474;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    position: relative;
+}
+
+.sidebar-icon {
+
+}
+
+.sidebar-link span {
+    padding-left: 12px;
+    font-weight: 700;
+    color: #333;
+    font-size: 14px;
+}
+
+.arrow {
+    position: absolute;
+    right: 0;
+    bottom: 18px;
+}
+
+.sidebar-submenu {
+    padding-left: 20px;
+}

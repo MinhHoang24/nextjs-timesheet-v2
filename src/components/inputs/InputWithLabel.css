@@ -1,0 +1,45 @@
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+input {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #555;
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.input-group label {
+    position: absolute;
+    cursor: auto;
+    width: 200px;
+    left: 0;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: start;
+    bottom: 0;
+}
+
+.focus label {
+    color: #3f51b5;
+    transform: scale(.75) translateY(-36px) translateX(-34px);
+}
+
+.focus label span {
+    color: #ff4081;
+}
+
+.focus input {
+    border-bottom: 1px solid #3f51b5;
+}
+
+.error label {
+    color: #f44336;
+}
+
+.error input {
+    border-bottom: 1px solid #f44336;
+}

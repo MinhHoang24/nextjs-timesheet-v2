@@ -1,0 +1,116 @@
+.card {
+    background: #fff;
+    min-height: 50px;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+    width: 100%;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #555;
+    padding: 15px;
+    position: relative;
+    border-bottom: 1px solid rgba(204, 204, 204, .35);
+}
+
+.task-header h2 {
+    font-size: 18px;
+    font-weight: 400;
+    color: #111;
+}
+
+i {
+    cursor: pointer;
+}
+
+.task-menu {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    background: #fff;
+    padding: 20px 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.task-menu:hover {
+    cursor: pointer;
+    background: rgba(0, 0, 0, .04);
+}
+
+.task-menu i {
+    margin-right: 16px;
+}
+
+.task-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.task-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h5 {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 10px 0;
+    color: #555;
+}
+
+p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+    font-weight: normal;
+}
+
+table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+table thead tr th {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: bottom;
+    text-align: left;
+    color: #555;
+    font-size: 14px;
+}
+
+table tbody tr td {
+    padding: 10px 5px;
+    margin: 0 5px;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #555;
+}
+
+table tbody tr:hover {
+    background: #f5f5f5;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-right: 10px;
+}
+
+.action > :first-child {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
