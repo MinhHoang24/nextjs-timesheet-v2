@@ -7,19 +7,14 @@ import SearchComponent from '@/components/search/SearchComponent';
 import Panel from '@/components/panel/Panel';
 import InputWithLabel from '@/components/inputs/InputWithLabel';
 import { taskService } from '@/services/adminService/taskService';
+import { TaskData } from '@/types/admin';
 
-type Task = {
-  id: number;
-  isDeleted: boolean;
-  name: string;
-  type: number;
-}
 
 const Task = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useState('');
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<TaskData[]>([]);
   const [openPanel, setOpenPanel] = useState(false);
 
   useEffect(() => {

@@ -3,3 +3,21 @@
 li {
     list-style: none;
 }
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: .5;
+        transform: translateY(-10%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

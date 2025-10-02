@@ -1,7 +1,6 @@
 'use client';
 
 import React from "react";
-import './overlay.css';
 
 type OverlayProps = {
   isOpenOverlay: boolean;
@@ -11,7 +10,7 @@ type OverlayProps = {
 const Overlay: React.FC<OverlayProps> = ({ isOpenOverlay, onClick }) => {
   if (!isOpenOverlay) return null;
 
-  return <div className="overlay" onClick={onClick}></div>;
+  return <div className="fixed top-0 left-0 w-full h-full bg-[#00000066] z-[99]" onClick={onClick}></div>;
 };
 
 export default Overlay;

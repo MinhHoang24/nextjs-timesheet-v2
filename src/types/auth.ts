@@ -3,12 +3,3 @@ export interface LoginData {
   password: string;
   rememberClient: boolean;
 }
-
-export interface AuthResponse {
-  result: {
-    accessToken: string;
-    encryptedAccessToken: string;
-    expireInSeconds: number;
-    userId: string;
-  };
-}

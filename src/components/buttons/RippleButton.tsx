@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './RippleButton.css';
 
 type Ripple = {
   x: number;
@@ -45,7 +44,7 @@ const RippleButton: React.FC<RippleButtonProps> = ({ text, bgBtncolor, textBtnco
 
   return (
     <button 
-        className={`ripple-button ${disabled ? 'disabled' : ''}`} 
+        className={`relative overflow-hidden py-0 px-4 leading-9 text-base text-white rounded font-normal cursor-pointer flex items-center gap-x-1 justify-center ${disabled ? 'disabled cursor-default' : ''}`} 
         onClick={handleRippleClick}
         style={{ backgroundColor: buttonColor, color: textBtnColor, width: width }}
     >
@@ -53,7 +52,7 @@ const RippleButton: React.FC<RippleButtonProps> = ({ text, bgBtncolor, textBtnco
       {ripples.map((ripple, index) => (
         <div
           key={index}
-          className="ripple"
+          className="absolute rounded-full bg-white/[0.4] animate-[ripple-animation_1.5s_ease-out]"
           style={{
             left: ripple.x + 'px',
             top: ripple.y + 'px',

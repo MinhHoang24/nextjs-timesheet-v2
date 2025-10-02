@@ -1,9 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react'
-import './Sidebar.css'
-// import { getUserInfo } from 'services/userServices/userService';
-
 import SidebarItem from '../sidebaritem/SidebarItem';
 import Link from 'next/link';
 import { UserInfo } from '@/types/user';
@@ -28,13 +25,6 @@ const SidebarComponent = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const data = await getUserInfo();
-  //     setUser(data);
-  //   })();
-  // }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -115,13 +105,15 @@ const SidebarComponent = () => {
   ];
 
   return (
-    <div className='sidebar'>
-      <div className='user-info'>
-        <div className='info'>
-          <div className='info-image' title='Update Avatar'>
-            <img src={userAva?.avatarFullPath} alt="User" />
+    <div className='sidebar bg-[#fdfdfd] w-[300px] h-[calc(100vh-70px)] fixed top-[70px] left-0 shadow-[2px_2px_5px_rgba(0,_0,_0,_0.1)] overflow-y-auto scrollbar-thin'>
+      <div className='user-info p-[13px_15px_12px] whitespace-nowrap fixed top-[70px] z-2 w-[300px] border-b border-[#e9e9e9] bg-no-repeat bg-center h-[86px]'
+        style={{ background: `url(https://stg-timesheet.nccsoft.vn/user-img-background.7f354e93c30f9d51fc3a.jpg)`}}
+      >
+        <div className='info flex justify-start items-center text-white relative'>
+          <div className='info-image cursor-pointer mr-[12px]' title='Update Avatar'>
+            <img src={userAva?.avatarFullPath} alt="User" className='rounded-full w-[50px]'/>
           </div>
-          <div className='profile-link'>
+          <div className='profile-link text-white text-[14px] no-underline'>
             <Link href="/main/my-profile" className='my-profile-link'>
               <div className='name'>
                 {userInfo?.fullName}
@@ -132,13 +124,13 @@ const SidebarComponent = () => {
             </Link>
           </div>
         </div>
-        <div className='btn-group' ref={menuRef}>
+        <div className='btn-group absolute right-0 bottom-[-5px] text-white cursor-pointer' ref={menuRef}>
           <i className='material-icons' onClick={() => setOpen((prev) => !prev)}>keyboard_arrow_down</i>
           {open && (
-            <ul className='logout-menu'>
+            <ul className='logout-menu bg-white absolute p-[5px_0] mt-[2px] text-left list-none shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)] right-0 top-[-12px] min-w-[160px]'>
               <li>
-                <a onClick={logout}>
-                  <i className='material-icons'>input</i>
+                <a onClick={logout} className='p-[7px_18px] text-[#666] text-[14px] flex items-center clear-both font-normal transition-all duration-500 hover:bg-[rgba(0,_0,_0,_0.075)] hover:text-[#262626] no-underline'>
+                  <i className='material-icons mr-[7px] mt-[2px] text-[20px]'>input</i>
                   Logout
                 </a>
               </li>
@@ -146,7 +138,7 @@ const SidebarComponent = () => {
           )}
         </div>
       </div>
-      <ul className="sidebar-menu">
+      <ul className="sidebar-menu absolute w-[300px] top-[86px] z-1">
         {items.map((item, index) => (
           <SidebarItem
             key={index}
@@ -157,13 +149,13 @@ const SidebarComponent = () => {
           />
         ))}
       </ul>
-      <div className='sidebar-footer'>
-        <div className='copyright'>
+      <div className='sidebar-footer fixed bottom-0 w-[300px] border-t border-[#eee] p-[15px] overflow-hidden z-2 bg-white'>
+        <div className='copyright text-[13px]'>
            © 2025 
-           <a href="javascript:void(0);">Timesheet</a>
+           <a className='text-[#f44336] no-underline font-bold'>Timesheet</a>
            . 
         </div>
-        <div className='version'>
+        <div className='version mt-[5px] text-[13px]'>
           <b>Version </b>
            4.3.0.0 [20252309] 
         </div>

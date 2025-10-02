@@ -1,15 +1,12 @@
 'use client';
 
 import LoginLayout from "@/components/layouts/LoginLayout";
-// import Link from "next/link";
-// import './LoginPage.css'
 import RippleButton from "@/components/buttons/RippleButton";
 import InputWithLabel from "@/components/inputs/InputWithLabel";
 import { useState } from "react";
 import CheckBox from "@/components/checkboxs/Checkbox";
 import { authService } from "@/services/authService/authService";
 import { useRouter } from "next/navigation";
-// import { authenticateUser } from "services/authServices/authService";
 
 export default function Login() {
     const [userNameOrEmailAddress, setUserNameOrEmailAddress] = useState('');
@@ -19,19 +16,9 @@ export default function Login() {
 
     const isFormValid = userNameOrEmailAddress.trim() !== '' && password.trim() !== '';
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
-  };
-
-    // const handleLogin = async () => {
-    //     const loginData = { userNameOrEmailAddress, password, rememberClient: isChecked };
-    //     const result = await authenticateUser(loginData);
-    //     if (result) {
-    //         window.location.href = "/home";
-    //     } else {
-    //         console.log("Login failed");
-    //     }
-    // };
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsChecked(e.target.checked);
+    };
 
     const handleLogin = async () => {
         const loginData = { userNameOrEmailAddress, password, rememberClient: isChecked };
@@ -48,7 +35,7 @@ export default function Login() {
     return (
         <LoginLayout>
             <div className="login-container bg-[#00bcd4] h-screen">
-                <div className="login-box max-w-[360px] mx-auto box-border pt-[82px]">
+                <div className="login-box max-w-[360px] mx-auto box-border pt-[82px] animate-[slideIn_.5s_ease-out_forwards]">
                     <div className="logo mb-5">
                         <a className="text-4xl text-center text-white block w-full">Timesheet</a>
                     </div>
