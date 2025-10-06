@@ -7,10 +7,11 @@ import Panel from '@/components/panel/Panel';
 import { taskService } from '@/services/adminService/taskService';
 import { TaskData } from '@/types/admin';
 import MainHeader from '@/components/main-header/MainHeader';
-import TaskTableSection from '@/components/pages/task/TaskTableSection';
+import TaskTableSection from './TaskTableSection';
+import TaskInput from './TaskInput';
 
 
-const Task = () => {
+const TaskComponent = () => {
   const [search, setSearch] = useState('');
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [openPanel, setOpenPanel] = useState(false);
@@ -20,8 +21,7 @@ const Task = () => {
     async function fetchData() {
       try {
         const taskRes = await taskService.getAllTask();
-        const taskList = taskRes.data.result;
-        setTasks(taskList);
+        setTasks(taskRes.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -29,29 +29,60 @@ const Task = () => {
     fetchData();
   }, [refreshKey]);
 
-  useEffect(() => {
-    console.log("Tasks updated:", tasks);
-  }, [tasks, refreshKey]);
-
   const normalize = (s: string = '') =>
     s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 
   const hasSearch = search.trim().length > 0;
 
-  const filterTasksByType = (type: number) => {
-    const filtered = tasks.filter(t => t.type === type);
-    if (!hasSearch) return filtered;
+  const filterTasks = (type: number) => {
+    const all = tasks.filter(t => t.type === type);
+    if (!hasSearch) return all;
     const q = normalize(search);
-    return filtered.filter(t => normalize(t.name).includes(q));
+    return all.filter(t => normalize(t.name).includes(q));
   };
 
-  const filteredTasks0 = useMemo(() => filterTasksByType(0), [tasks, search, hasSearch]);
-  const filteredTasks1 = useMemo(() => filterTasksByType(1), [tasks, search, hasSearch]);
+  const filteredTasks0 = useMemo(() => filterTasks(0), [tasks, search, hasSearch]);
+  const filteredTasks1 = useMemo(() => filterTasks(1), [tasks, search, hasSearch]);
 
   const handleRefresh = () => {
-    // Khi nhấn Refresh, ta thay đổi refreshKey để trigger re-render cho component cha
     setRefreshKey(prevKey => prevKey + 1);
   };
+
+  const [taskName, setTaskName] = useState<string>('');
+  const [taskType, setTaskType] = useState<string>('');
+
+  // Hàm lưu dữ liệu khi thay đổi
+  const handleDataChange = (taskName: string, taskType: string) => {
+    setTaskName(taskName);
+    setTaskType(taskType);
+  };
+
+  const handleClosePanel = () => {
+    setTaskName('');
+    setTaskType('');
+    setOpenPanel(false);
+  };
+
+  const handleSave = async () => {
+    const NewTaskData = {
+      "name": taskName,
+      "type": Number(taskType),
+      "isDeleted": false,
+      "id": 0
+    };
+    try {
+      const resAddNewTask = await taskService.addNewTask(NewTaskData);
+      setOpenPanel(false);
+      handleRefresh();
+    } catch (error) {
+      console.log('error add new task', error);
+    }
+  };
+
+  const handleDeleteTask = (id: number) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+    handleRefresh();
+  }
 
   return (
     <div>
@@ -77,26 +108,27 @@ const Task = () => {
                 />
               </div>
             </div>
-            
+
             <div className='task-table'>
-              <TaskTableSection
-                title="Common Task"
+              <TaskTableSection 
+                title = 'Common Task'
                 tasks={filteredTasks0}
-                taskType="common"
+                taskType='common'
               />
-              <TaskTableSection
-                title="Other Task"
+              <TaskTableSection 
+                title = 'Other Task'
                 tasks={filteredTasks1}
-                taskType="other"
+                taskType='other'
+                onDeleteTask={handleDeleteTask}
               />
             </div>
         </div>
       </div>
-      <Panel isOpenPanel={openPanel} onClose={() => setOpenPanel(false)} panelHeader='New task'>
-        <p>This is content inside panel</p>
-      </Panel>
+        <Panel onClick={handleSave} isOpenPanel={openPanel} onClose={handleClosePanel} panelHeader='New task'>
+          <TaskInput onDataChange={handleDataChange} />
+        </Panel>
     </div>
   )
 }
 
-export default Task
+export default TaskComponent

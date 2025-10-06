@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://dev-api-timesheet.nccsoft.vn/api";
+export const API_BASE_URL = "https://stg-api-timesheet.nccsoft.vn/api";

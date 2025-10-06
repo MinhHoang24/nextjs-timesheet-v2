@@ -32,7 +32,7 @@ const HeaderComponent = () => {
             <a className='dropdown-toggle text-white flex items-center' data-toggle="dropdown" role='button'>
               <i className='famfamfam-flags gb' title='English'></i>
               English
-              <b className='caret'></b>
+              <b className='caret ml-2'></b>
             </a>
           </li>
         </div>

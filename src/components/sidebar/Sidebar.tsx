@@ -28,10 +28,11 @@ const SidebarComponent = () => {
 
   useEffect(() => {
     async function fetchData() {
+      const userId = localStorage.getItem('userId');
       try {
         const [userInfoRes, userAvaRes] = await Promise.all([
           userService.getUserInfo(),
-          userService.getUserAva(),
+          userService.getUserAva(Number(userId)),
         ])
         const userInfo = userInfoRes.data.result;
         const userAva = userAvaRes.data.result;

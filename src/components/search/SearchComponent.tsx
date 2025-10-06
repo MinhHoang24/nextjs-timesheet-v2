@@ -28,7 +28,7 @@ const SearchComponent: React.FC<SearchProps> = ({ value, onChange, text }) => {
                     onChange={onChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    className='w-full border-0 outline-none'
+                    className='w-full border-none outline-none'
                 />
                 <label htmlFor="search" className={`absolute left-0 ${isFocused || value ? 'text-[#f44336] transform scale-[.75] translate-x-[-30px] translate-y-[-28px] bg-white px-[6px]' : 'text-black/[0.6]'}`}>
                     {text}

@@ -15,7 +15,7 @@ export default function RootLayout({
     <div>
       <HeaderComponent />
           <SidebarComponent />
-          <div className="absolute top-[70px] left-[300px] mt-[30px] mx-[15px] mb-0 w-[calc(100%-330px)]">
+          <div className="absolute top-[70px] left-[300px] mt-[30px] mx-[30px] mb-0 w-[calc(100%-360px)]">
             {children}
           </div>
     </div>

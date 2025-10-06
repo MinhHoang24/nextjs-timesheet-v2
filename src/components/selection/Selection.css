@@ -1,0 +1,44 @@
+.select-main {
+    position: relative;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+.select-main label {
+    color: rgba(0, 0, 0, .54);
+    font-size: 10px;
+}
+
+.select {
+    border-bottom: 1px solid rgba(0, 0, 0, .42);
+    background-color: #fff;
+    padding: 4px 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ul-select {
+    position: absolute;
+    width: 100%;
+    top: 24px;
+    border-radius: 4px;
+    max-height: 256px;
+    overflow: auto;
+    background: #fff;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.ul-select li {
+    padding: 10px;
+    background: #fff;
+}
+
+.ul-select li:hover {
+    background: rgba(0, 0, 0, .04);
+}
+
+.selected {
+    color: #3f51b5;
+    background: rgba(0, 0, 0, .12) !important;
+}
