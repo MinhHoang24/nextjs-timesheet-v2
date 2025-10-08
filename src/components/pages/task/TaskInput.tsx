@@ -8,7 +8,7 @@ interface Option {
 }
 
 interface TaskInputProps {
-  onDataChange: (taskName: string, taskType: string) => void;
+  onDataChange: (taskName: string, taskType: string,) => void;
 }
 
 const TaskInput: React.FC<TaskInputProps> = ({ onDataChange }) => {
@@ -26,7 +26,7 @@ const TaskInput: React.FC<TaskInputProps> = ({ onDataChange }) => {
 
     useEffect(() => {
         if (newTask && selectedOption) {
-        onDataChange(newTask, selectedOption);
+            onDataChange(newTask, selectedOption);
         }
     }, [newTask, selectedOption, onDataChange]);
 
@@ -38,8 +38,9 @@ const TaskInput: React.FC<TaskInputProps> = ({ onDataChange }) => {
                 inputId="new-task"
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
+                
             />
-            <Selection options={options} onSelect={handleSelection} />
+            <Selection options={options} onSelect={handleSelection} nameSelect="Task Type" />
         </div>
     );
 };

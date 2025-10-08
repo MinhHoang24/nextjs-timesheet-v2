@@ -6,6 +6,8 @@ import InputWithLabel from "@/components/inputs/InputWithLabel";
 import { authService } from "@/services/authService/authService";
 import { useRouter } from "next/navigation";
 import CheckBox from "@/components/checkboxs/Checkbox";
+import { LoginData } from "@/types/auth";
+import Cookies from 'js-cookie';
 
 const LoginForm: React.FC = () => {
   const [userNameOrEmailAddress, setUserNameOrEmailAddress] = useState('');
@@ -20,11 +22,17 @@ const LoginForm: React.FC = () => {
   };
 
   const handleLogin = async () => {
-    const loginData = { userNameOrEmailAddress, password, rememberClient: isChecked };
+    const loginData: LoginData = {
+      userNameOrEmailAddress,
+      password,
+      rememberClient: isChecked,
+    };
     const authenRes = await authService.authenUser(loginData);
+    const accessToken = authenRes.data.result.accessToken;
+    const userId = authenRes.data.result.userId;
     if (authenRes) {
-      localStorage.setItem('accessToken', authenRes.data.result.accessToken);
-      localStorage.setItem('userId', authenRes.data.result.userId);
+      Cookies.set('accessToken', accessToken, { expires: 7 });
+      Cookies.set('userId', userId, { expires: 7 });
       router.push('/main/tasks');
     } else {
       console.log("Login failed");

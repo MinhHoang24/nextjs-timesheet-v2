@@ -9,7 +9,7 @@ import { TaskData } from '@/types/admin';
 import MainHeader from '@/components/main-header/MainHeader';
 import TaskTableSection from './TaskTableSection';
 import TaskInput from './TaskInput';
-
+import toast from 'react-hot-toast';
 
 const TaskComponent = () => {
   const [search, setSearch] = useState('');
@@ -64,18 +64,25 @@ const TaskComponent = () => {
   };
 
   const handleSave = async () => {
-    const NewTaskData = {
+    const NewTaskData: TaskData = {
       "name": taskName,
       "type": Number(taskType),
       "isDeleted": false,
-      "id": 0
+      "id": 0,
     };
     try {
       const resAddNewTask = await taskService.addNewTask(NewTaskData);
+      console.log(resAddNewTask);
+      if (resAddNewTask.status == 200) {
+        toast.success(`Created Task: ${NewTaskData.name}`);
+      } else {
+        toast.error('Không thể thêm task. Vui lòng thử lại!');
+      }
       setOpenPanel(false);
       handleRefresh();
     } catch (error) {
       console.log('error add new task', error);
+      toast.error('Có lỗi xảy ra khi thêm task ❌');
     }
   };
 
@@ -124,7 +131,12 @@ const TaskComponent = () => {
             </div>
         </div>
       </div>
-        <Panel onClick={handleSave} isOpenPanel={openPanel} onClose={handleClosePanel} panelHeader='New task'>
+        <Panel 
+          onClick={handleSave} 
+          isOpenPanel={openPanel} 
+          onClose={handleClosePanel} 
+          panelHeader='New task'
+        >
           <TaskInput onDataChange={handleDataChange} />
         </Panel>
     </div>

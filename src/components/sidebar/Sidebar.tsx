@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { UserInfo } from '@/types/user';
 import { userService } from '@/services/userService/userServices';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const SidebarComponent = () => {
   const [open, setOpen] = useState(false);
@@ -28,10 +29,10 @@ const SidebarComponent = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const userId = localStorage.getItem('userId');
+      const userId = Cookies.get('userId');
       try {
         const [userInfoRes, userAvaRes] = await Promise.all([
-          userService.getUserInfo(),
+          userService.getUserInfo(Number(userId)),
           userService.getUserAva(Number(userId)),
         ])
         const userInfo = userInfoRes.data.result;
@@ -50,12 +51,13 @@ const SidebarComponent = () => {
   }, [userInfo, userAva]);
 
   const logout = () => {
-    localStorage.clear();
+    Cookies.remove('accessToken');
+    Cookies.remove('userId');
     router.push('/account/login');
   };
 
   const items = [
-    { icon: "account_box", label: "My information", href: "/main/my-profile" },
+    { icon: "account_box", label: "My information", href: "/main/test" },
     { icon: "admin_panel_settings", label: "Admin", href: "/main/my-profile", childrenItems: [
       { icon: "people", label: "Users", href: "/main/my-profile" },
       { icon: "local_offer", label: "Roles", href: "/main/my-profile" },

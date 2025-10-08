@@ -1,9 +1,11 @@
 // TaskTableSection.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import RippleButton from '@/components/buttons/RippleButton';
 import { TaskData } from '@/types/admin';
 import { taskService } from '@/services/adminService/taskService';
+import ConfirmModal from '@/components/cf-modal/CfModal';
+import toast from 'react-hot-toast';
 
 interface TaskTableSectionProps {
   title: string;
@@ -13,15 +15,17 @@ interface TaskTableSectionProps {
 }
 
 const TaskTableSection: React.FC<TaskTableSectionProps> = ({ title, tasks, taskType, onDeleteTask }) => {
+  const [confirmModal, setConfirmModal] = useState({ open: false, taskId: 0, taskName: '' });
   
+
   const handleDeleteTask = async (id: number) => {
     console.log('delete task id: ', id);
     try {
       const resDeleteTask = await taskService.deleteTask(id);
       if (resDeleteTask.status === 200 && onDeleteTask) {
         onDeleteTask(id);
-      }
-      console.log(resDeleteTask);
+      };
+      toast.success('Delete Task Successfully');
     } catch (error) {
       console.log('delete failed', error);
     }
@@ -59,14 +63,19 @@ const TaskTableSection: React.FC<TaskTableSectionProps> = ({ title, tasks, taskT
                   <td className="p-[10px_5px] m-[0_5px] align-middle border-b border-[#eee] text-[14px] text-[#555]">
                     <div className="action flex items-center justify-end gap-[10px] pr-[10px]">
                       {taskType === 'common' ? (
-                        <div className='flex gap-2'>
-                          <div className="rounded shadow-[0_3px_1px_-2px_rgba(0,_0,_0,_0.2),_0_2px_2px_0_rgba(0,_0,_0,_0.14),_0_1px_5px_0_rgba(0,_0,_0,_0.12)]">
-                            <RippleButton text="Archive" bgBtncolor="#fff" textBtncolor="#000000de" width="fit-content" />
-                          </div>
-                          <RippleButton text="Delete" bgBtncolor="#fb483a" textBtncolor="#00000042" width="fit-content" />
+                       <div className='flex gap-2'>
+                        <div className="rounded shadow-[0_3px_1px_-2px_rgba(0,_0,_0,_0.2),_0_2px_2px_0_rgba(0,_0,_0,_0.14),_0_1px_5px_0_rgba(0,_0,_0,_0.12)]">
+                          <RippleButton 
+                            text="Archive" bgBtncolor="#fff" textBtncolor="#000000de" width="fit-content" 
+                          />
                         </div>
+                        <RippleButton text="Delete" bgBtncolor="#fb483a" textBtncolor="#00000042" width="fit-content" />
+                      </div>
                       ) : ( 
-                        <RippleButton text="Delete" bgBtncolor="#fb483a" textBtncolor="#fff" width="fit-content" onClick={() => handleDeleteTask(task.id)}/>
+                        <RippleButton 
+                          text="Delete" bgBtncolor="#fb483a" textBtncolor="#fff" width="fit-content" 
+                          onClick={() => setConfirmModal({ open: true, taskId: task.id, taskName: task.name })}
+                        />
                       )}
                       
                     </div>
@@ -75,6 +84,13 @@ const TaskTableSection: React.FC<TaskTableSectionProps> = ({ title, tasks, taskT
               ))}
             </tbody>
           </table>
+
+          <ConfirmModal
+            isOpen={confirmModal.open}
+            message={`Delete task: "${confirmModal.taskName}"?`}
+            onConfirm={() => handleDeleteTask(confirmModal.taskId)}
+            onCancel={() => setConfirmModal({ open: false, taskId: 0, taskName: '' })}
+          />
         </div>
       </div>
     )

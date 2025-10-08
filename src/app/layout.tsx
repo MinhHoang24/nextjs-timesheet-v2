@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import './globals.css';
+import CustomToaster from "@/components/toast/CustomToaster";
 
 export const metadata: Metadata = {
   title: "Timesheet",
@@ -19,6 +20,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[#e9e9e9]">
         {children}
+        <CustomToaster />
       </body>
     </html>
   );

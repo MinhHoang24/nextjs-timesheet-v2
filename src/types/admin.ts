@@ -4,3 +4,7 @@ export interface TaskData {
     name: string;
     type: number;
 }
+
+export interface TaskUI extends TaskData {
+    isArchive?: boolean;
+}

@@ -17,7 +17,7 @@ const Panel: React.FC<PanelProps> = ({
   onClose,
   children,
   panelHeader,
-  onClick
+  onClick,
 }) => {
   return (
     <>

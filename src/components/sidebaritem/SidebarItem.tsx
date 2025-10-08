@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface SidebarItemProps {
   icon: string;
@@ -17,6 +18,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   childrenItems,
 }) => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
   return (
     <li className="sidebar-item w-full bg-[#fdfdfd] p-[5px_13px] overflow-x-auto">
@@ -31,10 +34,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             onClick();
           }
         }}
-        className="sidebar-link text-[#747474] no-underline flex items-center h-[44px] relative"
+        className={`sidebar-link text-[#747474] no-underline flex items-center h-[44px] relative ${isActive ? 'text-[#f44336]' : ''}`}
       >
         <i className="material-icons sidebar-icon">{icon}</i>
-        <span className="pl-[12px] font-bold text-[#333] text-[14px]">{label}</span>
+        <span className={`pl-[12px] font-bold text-[14px] ${isActive ? 'text-[#f44336]' : 'text-[#333]'}`}>{label}</span>
         {childrenItems && (
           <i className="material-icons arrow absolute right-0 bottom-[18px]">
             {open ? "-" : "+"}

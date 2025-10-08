@@ -1,5 +1,7 @@
 import { API_BASE_URL } from "@/config/apiConfig";
 import axios from "axios";
+import toast from "react-hot-toast";
+import Cookies from 'js-cookie';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -10,13 +12,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
-    const userId = localStorage.getItem("userId");
+    const token = Cookies.get("accessToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    }
-     if (userId) {
-      config.params = { ...(config.params || {}), "Id": userId};
     }
     return config;
   },
@@ -26,7 +24,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API Error:", error.response?.data || error.message);
+    console.error("API Error:", error);
+    toast.error(error.response?.data.error.message);
     return Promise.reject(error);
   }
 );
