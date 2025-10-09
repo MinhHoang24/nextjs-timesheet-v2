@@ -12,6 +12,9 @@ interface InputWithLabelProps {
 const InputWithLabel: React.FC<InputWithLabelProps> = ({ labelText, inputType, inputId, value, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
 
+  const isActive = isFocused || value.length > 0;
+  const isError =  !value;
+
   const handleFocus = () => {
     setIsFocused(true);
   };
@@ -19,9 +22,6 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({ labelText, inputType, i
   const handleBlur = () => {
     setIsFocused(false);
   };
-
-  const isActive = isFocused || value.length > 0;
-  const isError = !value;
 
   return (
       <div className={`input-group relative w-full ${isFocused || value ? 'focus' : ''} ${!value ? 'error' : ''}`}>

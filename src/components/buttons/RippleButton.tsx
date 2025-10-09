@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
-
-type Ripple = {
-  x: number;
-  y: number;
-  size: number;
-};
+import { useRippleEffect } from '@/hooks/useRippleEffect';
+import React from 'react';
 
 type RippleButtonProps = {
   text: string;
@@ -17,27 +12,7 @@ type RippleButtonProps = {
 };
 
 const RippleButton: React.FC<RippleButtonProps> = ({ text, bgBtncolor, textBtncolor, onClick, disabled, width, icon }) => {
-  const [ripples, setRipples] = useState<Ripple[]>([]);
-
-  const handleRippleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disabled) return;
-
-    const button = e.currentTarget;
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(button.offsetWidth, button.offsetHeight);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-
-    const newRipple: Ripple = { x, y, size };
-
-    setRipples((prevRipples) => [...prevRipples, newRipple]);
-
-    setTimeout(() => setRipples([]), 1000);
-
-    if (onClick) {
-      onClick();
-    }
-  };
+  const {ripples, createRipple} = useRippleEffect(1000);
 
   const buttonColor = disabled ? '#0000001f' : bgBtncolor;
   const textBtnColor = disabled ? '#00000042' : textBtncolor;
@@ -45,7 +20,12 @@ const RippleButton: React.FC<RippleButtonProps> = ({ text, bgBtncolor, textBtnco
   return (
     <button 
         className={`relative overflow-hidden py-0 px-4 leading-9 text-base text-white rounded font-normal cursor-pointer flex items-center gap-x-1 justify-center ${disabled ? 'disabled cursor-default' : ''}`} 
-        onClick={handleRippleClick}
+        onClick={(e) => {
+          createRipple(e);
+          if(onClick) {
+            onClick();
+          }
+        }}
         style={{ backgroundColor: buttonColor, color: textBtnColor, width: width }}
     >
       <i className='material-icons'>{icon}</i>
