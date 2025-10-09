@@ -41,8 +41,8 @@ const TaskComponent = () => {
     return all.filter(t => normalize(t.name).includes(q));
   };
 
-  const filteredTasks0 = useMemo(() => filterTasks(0), [tasks, search, hasSearch]);
-  const filteredTasks1 = useMemo(() => filterTasks(1), [tasks, search, hasSearch]);
+  const filteredTasks0 = useMemo(() => filterTasks(0), [tasks, search]);
+  const filteredTasks1 = useMemo(() => filterTasks(1), [tasks, search]);
 
   const handleRefresh = () => {
     setRefreshKey(prevKey => prevKey + 1);
