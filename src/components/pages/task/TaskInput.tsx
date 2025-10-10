@@ -1,4 +1,4 @@
-import InputWithLabel from "@/components/inputs/InputWithLabel";
+import TimesheetInput from "@/components/inputs/TimesheetInput";
 import Selection from "@/components/selection/Selection";
 import { useEffect, useState } from "react";
 
@@ -32,7 +32,7 @@ const TaskInput: React.FC<TaskInputProps> = ({ onDataChange }) => {
 
     return (
         <div>
-            <InputWithLabel 
+            <TimesheetInput 
                 labelText="Name"
                 inputType="text"
                 inputId="new-task"

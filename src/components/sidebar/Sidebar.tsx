@@ -3,16 +3,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SidebarItem from '../sidebaritem/SidebarItem';
 import Link from 'next/link';
-import { UserInfo } from '@/types/user';
-import { userService } from '@/services/userService/userServices';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { useUserInfo } from '@/hooks/useUserInfo';
 
 const SidebarComponent = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [userAva, setUserAva] = useState<UserInfo | null>(null);
+  const { userInfo, userAva } = useUserInfo();
   const router = useRouter();
 
   useEffect(() => {
@@ -26,29 +24,6 @@ const SidebarComponent = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      const userId = Cookies.get('userId');
-      try {
-        const [userInfoRes, userAvaRes] = await Promise.all([
-          userService.getUserInfo(Number(userId)),
-          userService.getUserAva(Number(userId)),
-        ])
-        const userInfo = userInfoRes.data.result;
-        const userAva = userAvaRes.data.result;
-        setUserInfo(userInfo);
-        setUserAva(userAva);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    
-  }, [userInfo, userAva]);
 
   const logout = () => {
     Cookies.remove('accessToken');
@@ -85,7 +60,7 @@ const SidebarComponent = () => {
         { icon: "rule", label: "Manage off/remote/onsite requests", href: "/main/test2" },
         { icon: "date_range", label: "Timesheet management", href: "/main/test2" },
         { icon: "supervised_user_circle", label: "Timesheets monitoring", href: "/main/test2" },
-        { icon: "assessment", label: "Project management", href: "/main/test2" },
+        { icon: "assessment", label: "Project management", href: "/main/projects" },
         { icon: "rate_review", label: "Review Interns", href: "/main/test2" },
         { icon: "event_note", label: "Retrospectives", href: "/main/test2" },
         { icon: "access_time", label: "Manage employee working times", href: "/main/test2" },
@@ -108,8 +83,13 @@ const SidebarComponent = () => {
   ];
 
   return (
-    <div className='sidebar bg-[#fdfdfd] w-[300px] h-[calc(100vh-70px)] fixed top-[70px] left-0 shadow-[2px_2px_5px_rgba(0,_0,_0,_0.1)] overflow-y-auto scrollbar-thin'>
-      <div className='user-info p-[13px_15px_12px] whitespace-nowrap fixed top-[70px] z-2 w-[300px] border-b border-[#e9e9e9] bg-no-repeat bg-center h-[86px]'
+    <div 
+      className='sidebar bg-[#fdfdfd] w-[300px] h-[calc(100vh-70px)] fixed top-[70px] left-0 
+      shadow-[2px_2px_5px_rgba(0,_0,_0,_0.1)] overflow-y-auto scrollbar-thin'
+    >
+      <div 
+        className='user-info p-[13px_15px_12px] whitespace-nowrap fixed top-[70px] z-2 
+        w-[300px] border-b border-[#e9e9e9] bg-no-repeat bg-center h-[86px]'
         style={{ background: `url(https://stg-timesheet.nccsoft.vn/user-img-background.7f354e93c30f9d51fc3a.jpg)`}}
       >
         <div className='info flex justify-start items-center text-white relative'>
@@ -130,9 +110,16 @@ const SidebarComponent = () => {
         <div className='btn-group absolute right-0 bottom-[-5px] text-white cursor-pointer' ref={menuRef}>
           <i className='material-icons' onClick={() => setOpen((prev) => !prev)}>keyboard_arrow_down</i>
           {open && (
-            <ul className='logout-menu bg-white absolute p-[5px_0] mt-[2px] text-left list-none shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)] right-0 top-[-12px] min-w-[160px]'>
+            <ul 
+              className='logout-menu bg-white absolute p-[5px_0] mt-[2px] text-left list-none 
+              shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)] right-0 top-[-12px] min-w-[160px]'
+            >
               <li>
-                <a onClick={logout} className='p-[7px_18px] text-[#666] text-[14px] flex items-center clear-both font-normal transition-all duration-500 hover:bg-[rgba(0,_0,_0,_0.075)] hover:text-[#262626] no-underline'>
+                <a 
+                  onClick={logout} 
+                  className='p-[7px_18px] text-[#666] text-[14px] flex items-center clear-both font-normal transition-all duration-500 
+                  hover:bg-[rgba(0,_0,_0,_0.075)] hover:text-[#262626] no-underline'
+                >
                   <i className='material-icons mr-[7px] mt-[2px] text-[20px]'>input</i>
                   Logout
                 </a>

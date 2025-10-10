@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import RippleButton from "@/components/buttons/RippleButton";
-import InputWithLabel from "@/components/inputs/InputWithLabel";
 import { authService } from "@/services/authService/authService";
 import { useRouter } from "next/navigation";
 import CheckBox from "@/components/checkboxs/Checkbox";
 import { LoginData } from "@/types/auth";
 import Cookies from 'js-cookie';
+import TimesheetInput from "@/components/inputs/TimesheetInput";
 
 const LoginForm: React.FC = () => {
   const [userNameOrEmailAddress, setUserNameOrEmailAddress] = useState('');
@@ -46,7 +46,7 @@ const LoginForm: React.FC = () => {
         <div className="form mb-10">
           <div className="input-group flex items-end w-full mb-12">
             <i className="material-icons pr-2">person</i>
-            <InputWithLabel 
+            <TimesheetInput
               labelText="User name or email"
               inputType="text"
               inputId="username"
@@ -56,7 +56,7 @@ const LoginForm: React.FC = () => {
           </div>
           <div className="input-group flex items-center w-full mb-14">
             <i className="material-icons pr-2">lock</i>
-            <InputWithLabel 
+            <TimesheetInput 
               labelText="Password"
               inputType="password"
               inputId="password"

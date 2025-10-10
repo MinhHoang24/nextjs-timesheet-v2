@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-interface InputWithLabelProps {
+interface TimesheetInputProps {
   labelText: string;
   inputType: string;
   inputId: string;
@@ -9,7 +9,7 @@ interface InputWithLabelProps {
   className?: string;
 }
 
-const InputWithLabel: React.FC<InputWithLabelProps> = ({ labelText, inputType, inputId, value, onChange }) => {
+const TimesheetInput: React.FC<TimesheetInputProps> = ({ labelText, inputType, inputId, value, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const isActive = isFocused || value.length > 0;
@@ -52,4 +52,4 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({ labelText, inputType, i
   );
 };
 
-export default InputWithLabel;
+export default TimesheetInput;

@@ -23,8 +23,10 @@ const Panel: React.FC<PanelProps> = ({
     <>
       <Overlay isOpenOverlay={isOpenPanel} onClick={onClose} />
         <div className=
-          {`fixed bg-white z-[100] top-[100px] left-[330px] p-[24px] rounded-[4px] w-3/5 h-fit box-border overflow-auto outline-none shadow-[0_11px_15px_-7px_rgba(0,_0,_0,_0.2),_0_24px_38px_3px_rgba(0,_0,_0,_0.14),_0_9px_46px_8px_rgba(0,_0,_0,_0.12)]
-          ${isOpenPanel ? 'block' : 'hidden'}`} >
+          {`fixed bg-white z-[100] top-[100px] left-[330px] p-[24px] rounded-[4px] w-3/5 h-fit box-border overflow-auto outline-none 
+            shadow-[0_11px_15px_-7px_rgba(0,_0,_0,_0.2),_0_24px_38px_3px_rgba(0,_0,_0,_0.14),_0_9px_46px_8px_rgba(0,_0,_0,_0.12)]
+            animate-[popup_.2s_ease-out_forwards] ${isOpenPanel ? 'block' : 'hidden'}`}
+          >
           <h1 className="panel-header w-full mb-10 font-medium text-xl">
             {panelHeader}
           </h1>
